@@ -21,7 +21,7 @@ A barebones SPA Template
 
 ## FAQ
 
-### I'm getting a certificate invalid issue when running `npm run dev-serve`
+### I'm getting a certificate invalid issue when running `npm run dev`
 
 This is an issue because `webpack-dev-server` generates a cert which, according to Chrome, is invalid. There are two approaches, either generate a self-cert or allow invalid certs for localhost:
 
