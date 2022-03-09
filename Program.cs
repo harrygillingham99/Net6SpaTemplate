@@ -31,12 +31,11 @@ finally
 WebApplicationBuilder ConfigureBuilder(string[] strings)
 {
     var webApplicationBuilder = WebApplication.CreateBuilder(strings);
+
     webApplicationBuilder.Host.UseSerilog();
 
-    webApplicationBuilder.Services.Configure<AppSettings>(
-        webApplicationBuilder.Configuration.GetSection("AppConfig"));
-
-    // Add services to the container.
+    webApplicationBuilder.Services.Configure<AppSettings>(provider => webApplicationBuilder.Configuration.GetSection("AppConfig").Bind(provider));
+    
     webApplicationBuilder.Services.AddControllersWithViews();
 
     webApplicationBuilder.Services.AddResponseCompression();

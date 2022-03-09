@@ -18,7 +18,8 @@
       "eslint --fix",
       "prettier --write"
     ],
-    "*.scss": "stylint --fix"
+    "*.scss": "stylint --fix",
+    "*.json": "prettier --write"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
@@ -29,7 +30,6 @@
     "@babel/runtime": "^7.16.3",
     "@testing-library/react": "^12.1.2",
     "@types/dompurify": "^2.3.3",
-    "@types/gtag.js": "^0.0.8",
     "@types/jest": "^27.0.3",
     "@types/react-bootstrap-typeahead": "^5.1.8",
     "@types/webpack-dev-server": "^4.5.0",
@@ -60,10 +60,8 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "@types/facebook-pixel": "^0.0.24",
     "@types/react": "^17.0.36",
     "@types/react-dom": "^17.0.11",
-    "@types/yup": "^0.29.13",
     "app-root-path": "^3.0.0",
     "bootstrap": "^5.1.3",
     "classnames": "^2.3.1",
@@ -78,13 +76,10 @@
     "prettier": "^2.5.1",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.3",
-    "react-bootstrap-typeahead": "5.2.1",
     "react-dom": "^17.0.2",
     "react-feather": "^2.0.9",
     "react-router-dom": "^6.0.2",
-    "react-select": "^5.2.1",
     "stylelint": "^14.5.3",
-    "unstated-next": "^1.1.0",
-    "yup": "^0.32.11"
+    "unstated-next": "^1.1.0"
   }
 }
