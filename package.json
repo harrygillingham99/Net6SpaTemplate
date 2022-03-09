@@ -13,6 +13,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "lint-staged": {
+    "*.{js, jsx, ts, tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.scss" : "stylint --fix"
+  },
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@babel/plugin-transform-runtime": "^7.16.4",
@@ -30,6 +37,7 @@
     "css-loader": "^6.5.1",
     "html-webpack-harddisk-plugin": "^2.0.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^7.0.0",
     "jest": "^27.4.5",
     "mini-css-extract-plugin": "^2.4.5",
     "postcss": "^8.4.1",
@@ -45,8 +53,7 @@
     "webpack": "^5.64.2",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.5.0",
-    "webpack-merge": "^5.8.0",
-    "husky": "^7.0.0"
+    "webpack-merge": "^5.8.0"
   },
   "dependencies": {
     "@types/facebook-pixel": "^0.0.24",
@@ -59,10 +66,13 @@
     "clean-webpack-plugin": "^4.0.0",
     "dayjs": "^1.10.7",
     "dompurify": "^2.3.4",
+    "eslint": "^8.10.0",
     "file-loader": "^6.2.0",
     "formik": "^2.2.9",
     "html-loader": "^3.0.1",
     "kill-port": "^1.6.1",
+    "lint-staged": "^12.3.5",
+    "prettier": "^2.5.1",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.3",
     "react-bootstrap-typeahead": "5.2.1",
@@ -70,6 +80,7 @@
     "react-feather": "^2.0.9",
     "react-router-dom": "^6.0.2",
     "react-select": "^5.2.1",
+    "stylelint": "^14.5.3",
     "unstated-next": "^1.1.0",
     "yup": "^0.32.11"
   }
