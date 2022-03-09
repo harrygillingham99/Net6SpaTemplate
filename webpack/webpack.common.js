@@ -1,14 +1,12 @@
-const path = require("path");
 const TsConfigPathsPlugin = require("tsconfig-paths-webpack-plugin").default;
+const config = require("./config");
 
 module.exports = {
   target: "web",
   entry: "./src/scripts/app/index.tsx",
   resolve: {
-    plugins: [
-      new TsConfigPathsPlugin({extensions: [".ts", ".tsx", ".js", ".jsx"]}),
-    ],
-    extensions: [".ts", ".tsx", ".js", ".jsx"],
+    plugins: [new TsConfigPathsPlugin({ extensions: config.extensions })],
+    extensions: config.extensions,
   },
   module: {
     rules: [

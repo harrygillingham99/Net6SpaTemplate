@@ -12,7 +12,7 @@ module.exports = merge(webpackCommon, {
   plugins: [
     new HtmlWebpackPlugin({
       ...config.commonHtmlWebpackPlugin,
-      title: "1plus1Loans | Apply for a loan",
+      title: "Net6SpaTemplate",
       minify: false,
     }),
     new htmlWebpackHarddiskPlugin(),

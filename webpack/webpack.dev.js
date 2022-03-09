@@ -4,26 +4,26 @@ const killPort = require("kill-port");
 const config = require("./config");
 const { merge } = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const htmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
+const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
 const webpackCommon = require("./webpack.common.js");
 
 module.exports = () => {
   killPort(config.devServerPort);
 
-  setTimeout(() => console.log("Starting the development server"), 30000)
+  setTimeout(() => console.log("Starting the development server"), 30000);
   return merge(webpackCommon, {
     mode: "development",
     plugins: [
       new HtmlWebpackPlugin({
         ...config.commonHtmlWebpackPlugin,
-        title: "DEV - Apply",
+        title: "Net6SpaTemplate",
         alwaysWriteToDisk: true,
       }),
-      new htmlWebpackHarddiskPlugin(),
+      new HtmlWebpackHarddiskPlugin(),
     ],
     devtool: "inline-source-map",
     stats: {
-      errorDetails: true
+      errorDetails: true,
     },
     devServer: {
       static: {

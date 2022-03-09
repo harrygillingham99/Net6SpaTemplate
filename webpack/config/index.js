@@ -6,6 +6,8 @@ module.exports = {
 
   publicPath: `https://localhost:8080/`,
 
+  extensions: [".ts", ".tsx", ".js", ".jsx"],
+
   commonHtmlWebpackPlugin: {
     filename: path.join(`${appRoot}`, "Views", "Shared", "_Layout.cshtml"),
     template: path.join(
