@@ -1,5 +1,6 @@
 const TsConfigPathsPlugin = require("tsconfig-paths-webpack-plugin").default;
 const config = require("./config");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
   target: "web",
@@ -8,6 +9,7 @@ module.exports = {
     plugins: [new TsConfigPathsPlugin({ extensions: config.extensions })],
     extensions: config.extensions,
   },
+  plugins: [new ForkTsCheckerWebpackPlugin()],
   module: {
     rules: [
       {

@@ -7,10 +7,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
 const webpackCommon = require("./webpack.common.js");
 
-module.exports = () => {
-  killPort(config.devServerPort);
-
-  setTimeout(() => console.log("Starting the development server"), 30000);
+module.exports = async () => {
+  await killPort(config.devServerPort);
+  console.log("Starting the development server");
   return merge(webpackCommon, {
     mode: "development",
     plugins: [
