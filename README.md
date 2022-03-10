@@ -28,4 +28,5 @@ This is an issue because `webpack-dev-server` generates a cert which, according 
 
 ## Contributors
 - [@WilliamJenner](https://github.com/WilliamJenner)
-- @me
+- [@harrygillingham99](https://github.com/harrygillingham99)
+
