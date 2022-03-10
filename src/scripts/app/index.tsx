@@ -10,8 +10,6 @@ let render = (): void => {
 };
 
 if ((module as any).hot) {
-  console.log("HMR enabled");
-
   const renderApp = render;
 
   render = (): void => {
@@ -19,7 +17,6 @@ if ((module as any).hot) {
   };
 
   (module as any).hot.accept("./components/App", (): void => {
-    console.log("Module Replaced");
     setTimeout(render);
   });
 }
