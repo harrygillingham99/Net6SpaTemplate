@@ -24,6 +24,26 @@ module.exports = async () => {
     stats: {
       errorDetails: true,
     },
+    module: {
+      rules: [
+        {
+          test: /\.s[ac]ss|css$/i,
+          use: [
+            // Creates `style` nodes from JS strings
+            { loader: "style-loader" },
+            // Translates CSS into CommonJS
+            {
+              loader: "css-loader",
+              options: {
+                url: true,
+              },
+            },
+            // Compiles Sass to CSS
+            { loader: "sass-loader" },
+          ],
+        },
+      ],
+    },
     devServer: {
       static: {
         directory: path.resolve(appRoot.toString(), "wwwroot"),
