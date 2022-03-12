@@ -1,0 +1,1 @@
+{"version":3,"file":"../css/main.min.css","mappings":"AAAA,EACE,qBACA,sB","sources":["webpack://net-6-spa-template/./src/styles/index.scss"],"sourcesContent":["p {\r\n  background-color: red;\r\n  border: 1px solid black;\r\n}\r\n"],"names":[],"sourceRoot":""}

@@ -13,22 +13,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.s[ac]ss|css$/i,
-        use: [
-          // Creates `style` nodes from JS strings
-          { loader: "style-loader" },
-          // Translates CSS into CommonJS
-          {
-            loader: "css-loader",
-            options: {
-              url: true,
-            },
-          },
-          // Compiles Sass to CSS
-          { loader: "sass-loader" },
-        ],
-      },
-      {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: "asset",
       },
