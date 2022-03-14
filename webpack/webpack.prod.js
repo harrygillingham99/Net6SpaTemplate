@@ -17,7 +17,7 @@ module.exports = merge(webpackCommon, {
       "process.env.NODE_ENV": JSON.stringify("production"),
     }),
     new MiniCssExtractPlugin({
-      filename: "css/[name].[contenthash].min.css",
+      filename: "css/[name].[contenthash:8].min.css",
     }),
     new CleanWebpackPlugin({
       verbose: true,
@@ -65,7 +65,7 @@ module.exports = merge(webpackCommon, {
   },
   output: {
     path: config.distPath,
-    filename: "js/[name].[contenthash].js",
+    filename: "js/[name].[contenthash:8].js",
     clean: true,
     publicPath: config.siteRoot,
   },
