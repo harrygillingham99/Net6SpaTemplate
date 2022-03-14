@@ -4,11 +4,11 @@ const killPort = require("kill-port");
 const config = require("./config");
 const { merge } = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
 const webpackCommon = require("./webpack.common.js");
+const { webpack } = require("webpack");
 
-module.exports = async () => {
-  await killPort(config.devServerPort);
+module.exports = async ({ dev_server }) => {
+  dev_server && (await killPort(config.devServerPort));
   console.log("Starting the development server");
   return merge(webpackCommon, {
     mode: "development",
@@ -16,9 +16,8 @@ module.exports = async () => {
       new HtmlWebpackPlugin({
         ...config.commonHtmlWebpackPlugin,
         title: "Net6SpaTemplate",
-        alwaysWriteToDisk: true,
+        devServer: dev_server ? config.publicPath : false,
       }),
-      new HtmlWebpackHarddiskPlugin(),
     ],
     devtool: "inline-source-map",
     stats: {
@@ -51,6 +50,7 @@ module.exports = async () => {
       allowedHosts: "all",
       compress: true,
       server: "https",
+      hot: true,
       port: config.devServerPort,
       headers: {
         "Access-Control-Allow-Origin": "*",
