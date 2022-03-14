@@ -1,5 +1,3 @@
-const path = require("path");
-const appRoot = require("app-root-path");
 const config = require("./config");
 const webpack = require("webpack");
 const { merge } = require("webpack-merge");
@@ -58,6 +56,9 @@ module.exports = merge(webpackCommon, {
               url: true,
             },
           },
+          {
+            loader: "postcss-loader"
+          },
           // Compiles Sass to CSS
           { loader: "sass-loader" },
         ],
@@ -65,9 +66,9 @@ module.exports = merge(webpackCommon, {
     ],
   },
   output: {
-    path: path.resolve(appRoot.toString(), "wwwroot"),
+    path: config.distPath,
     filename: "js/[name].[contenthash].js",
     clean: true,
-    publicPath: "/",
+    publicPath: config.siteRoot,
   },
 });

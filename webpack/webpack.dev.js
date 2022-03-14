@@ -1,24 +1,31 @@
-const path = require("path");
-const appRoot = require("app-root-path");
 const killPort = require("kill-port");
 const config = require("./config");
 const { merge } = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
+const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
 const webpackCommon = require("./webpack.common.js");
-const { webpack } = require("webpack");
 
 module.exports = async ({ dev_server }) => {
-  dev_server && (await killPort(config.devServerPort));
-  console.log("Starting the development server");
+  dev_server = dev_server === "true";
+
+  if (dev_server) await killPort(config.devServerPort);
+
   return merge(webpackCommon, {
     mode: "development",
     plugins: [
+      !dev_server && new CleanWebpackPlugin({ verbose: true }),
+      new HtmlWebpackHarddiskPlugin(),
       new HtmlWebpackPlugin({
         ...config.commonHtmlWebpackPlugin,
-        title: "Net6SpaTemplate",
-        devServer: dev_server ? config.publicPath : false,
+        title: "DEV - Net6SpaTemplate",
+        devServer: dev_server
+          ? `${config.devServerUrl}:${config.devServerPort}`
+          : false,
+        alwaysWriteToDisk: true,
+        verbose: true,
       }),
-    ],
+    ].filter(Boolean),
     devtool: "inline-source-map",
     stats: {
       errorDetails: true,
@@ -37,6 +44,9 @@ module.exports = async ({ dev_server }) => {
                 url: true,
               },
             },
+            {
+              loader: "postcss-loader"
+            },
             // Compiles Sass to CSS
             { loader: "sass-loader" },
           ],
@@ -45,7 +55,7 @@ module.exports = async ({ dev_server }) => {
     },
     devServer: {
       static: {
-        directory: path.resolve(appRoot.toString(), "wwwroot"),
+        directory: config.distPath,
       },
       allowedHosts: "all",
       compress: true,
@@ -60,11 +70,12 @@ module.exports = async ({ dev_server }) => {
           "X-Requested-With, content-type, Authorization",
       },
     },
-
     output: {
-      path: path.resolve(appRoot.toString(), "wwwroot"),
+      path: config.distPath,
       filename: "js/[name].bundle.js",
-      publicPath: config.publicPath,
+      publicPath: dev_server
+        ? `${config.devServerUrl}:${config.devServerPort}`
+        : "/",
     },
   });
 };
