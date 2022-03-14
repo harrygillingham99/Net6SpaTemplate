@@ -4,7 +4,10 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
   target: "web",
-  entry: "./src/scripts/app/index.tsx",
+  entry: {
+    app: config.app,
+    vendors: config.vendors,
+  },
   resolve: {
     plugins: [new TsConfigPathsPlugin({ extensions: config.extensions })],
     extensions: config.extensions,
@@ -37,6 +40,6 @@ module.exports = {
     ],
   },
   output: {
-    assetModuleFilename: "static/[name][ext]",
+    assetModuleFilename: "static/[name].[hash][ext]",
   },
 };

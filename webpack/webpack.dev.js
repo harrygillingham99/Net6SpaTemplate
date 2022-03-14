@@ -1,25 +1,31 @@
-const path = require("path");
-const appRoot = require("app-root-path");
 const killPort = require("kill-port");
 const config = require("./config");
 const { merge } = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
 const webpackCommon = require("./webpack.common.js");
 
-module.exports = async () => {
-  await killPort(config.devServerPort);
-  console.log("Starting the development server");
+module.exports = async ({ dev_server }) => {
+  dev_server = dev_server === "true";
+
+  if (dev_server) await killPort(config.devServerPort);
+
   return merge(webpackCommon, {
     mode: "development",
     plugins: [
+      !dev_server && new CleanWebpackPlugin({ verbose: true }),
+      new HtmlWebpackHarddiskPlugin(),
       new HtmlWebpackPlugin({
         ...config.commonHtmlWebpackPlugin,
-        title: "Net6SpaTemplate",
+        title: "DEV - Net6SpaTemplate",
+        devServer: dev_server
+          ? `${config.devServerUrl}:${config.devServerPort}`
+          : false,
         alwaysWriteToDisk: true,
+        verbose: true,
       }),
-      new HtmlWebpackHarddiskPlugin(),
-    ],
+    ].filter(Boolean),
     devtool: "inline-source-map",
     stats: {
       errorDetails: true,
@@ -38,6 +44,9 @@ module.exports = async () => {
                 url: true,
               },
             },
+            {
+              loader: "postcss-loader",
+            },
             // Compiles Sass to CSS
             { loader: "sass-loader" },
           ],
@@ -46,11 +55,12 @@ module.exports = async () => {
     },
     devServer: {
       static: {
-        directory: path.resolve(appRoot.toString(), "wwwroot"),
+        directory: config.distPath,
       },
       allowedHosts: "all",
       compress: true,
       server: "https",
+      hot: true,
       port: config.devServerPort,
       headers: {
         "Access-Control-Allow-Origin": "*",
@@ -60,11 +70,12 @@ module.exports = async () => {
           "X-Requested-With, content-type, Authorization",
       },
     },
-
     output: {
-      path: path.resolve(appRoot.toString(), "wwwroot"),
+      path: config.distPath,
       filename: "js/[name].bundle.js",
-      publicPath: config.publicPath,
+      publicPath: dev_server
+        ? `${config.devServerUrl}:${config.devServerPort}`
+        : "/",
     },
   });
 };
