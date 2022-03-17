@@ -20,7 +20,7 @@ module.exports = async ({ dev_server }) => {
         ...config.commonHtmlWebpackPlugin,
         title: "DEV - Net6SpaTemplate",
         devServer: dev_server
-          ? `${config.devServerUrl}:${config.devServerPort}`
+          ? `${config.devServerUrl}:${config.devServerPort}/`
           : false,
         alwaysWriteToDisk: true,
         verbose: true,
@@ -74,7 +74,7 @@ module.exports = async ({ dev_server }) => {
       path: config.distPath,
       filename: "js/[name].bundle.js",
       publicPath: dev_server
-        ? `${config.devServerUrl}:${config.devServerPort}`
+        ? `${config.devServerUrl}:${config.devServerPort}/`
         : "/",
     },
   });

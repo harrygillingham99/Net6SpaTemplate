@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Net6SpaTemplate;
 using Serilog;
 
@@ -36,7 +35,12 @@ WebApplicationBuilder ConfigureBuilder(string[] strings)
 
     webApplicationBuilder.Services.Configure<AppSettings>(provider => webApplicationBuilder.Configuration.GetSection("AppConfig").Bind(provider));
     
-    webApplicationBuilder.Services.AddControllersWithViews();
+    var mvcBuilder = webApplicationBuilder.Services.AddControllersWithViews();
+
+    if (webApplicationBuilder.Environment.IsDevelopment())
+    {
+        mvcBuilder.AddRazorRuntimeCompilation();
+    }
 
     webApplicationBuilder.Services.AddResponseCompression();
 
@@ -75,13 +79,6 @@ void ConfigureApp(WebApplication webApplication)
             await next.Invoke();
         });
         webApplication.UseDeveloperExceptionPage();
-        webApplication.UseSpa(cfg =>
-        {
-            cfg.Options.SourcePath = "src/";
-            cfg.Options.StartupTimeout = TimeSpan.FromSeconds(30);
-            cfg.Options.DevServerPort = 8080;
-            cfg.UseReactDevelopmentServer("dev");
-        });
     }
 }
 

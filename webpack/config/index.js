@@ -17,7 +17,7 @@ module.exports = {
 
   distPath: path.resolve(appRoot.toString(), "wwwroot"),
 
-  devServerUrl: `https://localhost`,
+  devServerUrl: "https://localhost",
 
   siteRoot: "/",
 
