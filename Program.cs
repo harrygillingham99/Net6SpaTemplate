@@ -75,13 +75,6 @@ void ConfigureApp(WebApplication webApplication)
             await next.Invoke();
         });
         webApplication.UseDeveloperExceptionPage();
-        //webApplication.UseSpa(cfg =>
-        //{
-        //    cfg.Options.SourcePath = "src/";
-        //    cfg.Options.StartupTimeout = TimeSpan.FromSeconds(30);
-        //    cfg.Options.DevServerPort = 8080;
-        //    cfg.UseReactDevelopmentServer("dev");
-        //});
     }
 }
 

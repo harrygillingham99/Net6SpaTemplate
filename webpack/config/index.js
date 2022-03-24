@@ -1,10 +1,16 @@
 const path = require("path");
+const process = require("process");
 const appRoot = require("app-root-path");
+
+const faviconPath = "./src/icons/favicon/*";
+const distPath = path.resolve(appRoot.toString(), "wwwroot");
 
 module.exports = {
   devServerPort: 8080,
 
-  app: "./src/scripts/app/index.tsx",
+  app: { import: "./src/scripts/app/index.tsx", dependOn: "vendors" },
+
+  faviconPath: faviconPath,
 
   vendors: [
     "react",
@@ -15,13 +21,31 @@ module.exports = {
     "dayjs",
   ],
 
-  distPath: path.resolve(appRoot.toString(), "wwwroot"),
+  distPath: distPath,
 
-  devServerUrl: `https://localhost`,
+  devServerUrl: "https://localhost",
 
   siteRoot: "/",
 
   extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
+
+  cleanWebpackOptions: {
+    cleanOnceBeforeBuildPatterns: [
+      "**/*",
+      path.join(process.cwd(), "Views", "Shared", "_Layout.cshtml"),
+    ],
+    verbose: true,
+  },
+
+  copyOptions: {
+    patterns: [
+      {
+        from: faviconPath,
+        to: path.join(distPath, "favicon/[name][ext]"),
+        noErrorOnMissing: true,
+      },
+    ],
+  },
 
   commonHtmlWebpackPlugin: {
     filename: path.join(`${appRoot}`, "Views", "Shared", "_Layout.cshtml"),
@@ -32,5 +56,6 @@ module.exports = {
       "_Layout_Template.cshtml"
     ),
     inject: false,
+    minify: false,
   },
 };

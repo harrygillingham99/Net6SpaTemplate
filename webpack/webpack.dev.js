@@ -1,5 +1,5 @@
 const killPort = require("kill-port");
-const config = require("./config");
+const config = require("./config/index");
 const { merge } = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
@@ -14,13 +14,13 @@ module.exports = async ({ dev_server }) => {
   return merge(webpackCommon, {
     mode: "development",
     plugins: [
-      !dev_server && new CleanWebpackPlugin({ verbose: true }),
+      !dev_server && new CleanWebpackPlugin({ ...config.cleanWebpackOptions }),
       new HtmlWebpackHarddiskPlugin(),
       new HtmlWebpackPlugin({
         ...config.commonHtmlWebpackPlugin,
-        title: "DEV - Net6SpaTemplate",
+        title: "NetCoreSPATemplate",
         devServer: dev_server
-          ? `${config.devServerUrl}:${config.devServerPort}`
+          ? `${config.devServerUrl}:${config.devServerPort}/`
           : false,
         alwaysWriteToDisk: true,
         verbose: true,
@@ -45,7 +45,7 @@ module.exports = async ({ dev_server }) => {
               },
             },
             {
-              loader: "postcss-loader"
+              loader: "postcss-loader",
             },
             // Compiles Sass to CSS
             { loader: "sass-loader" },
@@ -74,7 +74,7 @@ module.exports = async ({ dev_server }) => {
       path: config.distPath,
       filename: "js/[name].bundle.js",
       publicPath: dev_server
-        ? `${config.devServerUrl}:${config.devServerPort}`
+        ? `${config.devServerUrl}:${config.devServerPort}/`
         : "/",
     },
   });

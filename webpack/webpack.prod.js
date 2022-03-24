@@ -1,4 +1,4 @@
-const config = require("./config");
+const config = require("./config/index");
 const webpack = require("webpack");
 const { merge } = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -16,17 +16,15 @@ module.exports = merge(webpackCommon, {
       PRODUCTION: JSON.stringify(true),
       "process.env.NODE_ENV": JSON.stringify("production"),
     }),
-
     new MiniCssExtractPlugin({
-      filename: "css/[name].[contenthash].min.css",
+      filename: "css/[name].[contenthash:8].min.css",
     }),
     new CleanWebpackPlugin({
-      verbose: true,
+      ...config.cleanWebpackOptions,
     }),
     new HtmlWebpackPlugin({
       ...config.commonHtmlWebpackPlugin,
-      title: "Net6SpaTemplate",
-      minify: false,
+      title: "NetCoreSPATemplate",
     }),
   ],
   devtool: false,
@@ -35,10 +33,23 @@ module.exports = merge(webpackCommon, {
     minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
     splitChunks: {
       cacheGroups: {
-        commons: {
-          name: "commons",
-          chunks: "all",
-          minChunks: 2,
+        default: false,
+        commons: false,
+        defaultVendors: false,
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          chunks(chunk) {
+            return chunk.name === "vendors";
+          },
+          name(module) {
+            // get the name. E.g. node_modules/packageName/not/this/part.js
+            // or node_modules/packageName
+            const packageName = module.context.match(
+              /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+            )[1];
+            // npm package names are URL-safe, but some servers don't like @ symbols
+            return packageName.replace("@", "");
+          },
         },
       },
     },
@@ -57,7 +68,7 @@ module.exports = merge(webpackCommon, {
             },
           },
           {
-            loader: "postcss-loader"
+            loader: "postcss-loader",
           },
           // Compiles Sass to CSS
           { loader: "sass-loader" },
@@ -67,8 +78,7 @@ module.exports = merge(webpackCommon, {
   },
   output: {
     path: config.distPath,
-    filename: "js/[name].[contenthash].js",
-    clean: true,
+    filename: "js/[name].[contenthash:8].js",
     publicPath: config.siteRoot,
   },
 });

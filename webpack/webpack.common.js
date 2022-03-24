@@ -1,5 +1,7 @@
 const TsConfigPathsPlugin = require("tsconfig-paths-webpack-plugin").default;
-const config = require("./config");
+const CopyPlugin = require("copy-webpack-plugin");
+const config = require("./config/index");
+const path = require("path");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
@@ -12,7 +14,10 @@ module.exports = {
     plugins: [new TsConfigPathsPlugin({ extensions: config.extensions })],
     extensions: config.extensions,
   },
-  plugins: [new ForkTsCheckerWebpackPlugin()],
+  plugins: [
+    new ForkTsCheckerWebpackPlugin(),
+    new CopyPlugin({ patterns: config.copyOptions.patterns }),
+  ],
   module: {
     rules: [
       {
@@ -40,6 +45,9 @@ module.exports = {
     ],
   },
   output: {
-    assetModuleFilename: "static/[name].[hash][ext]",
+    assetModuleFilename: "static/[name].[hash:8][ext]",
+  },
+  optimization: {
+    runtimeChunk: "single",
   },
 };
