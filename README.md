@@ -19,6 +19,15 @@ A barebones SPA Template
 1.    NodeJS v16.13.0 or later
 2.    .NET 6 SDK
 
+## Scripts
+
+The following scripts are available in the `package.json` to be run with `npm run {script}` from the root of the WebHost folder.
+
+- `dev-serve`: Generates and hosts javascript bundles in development mode with hot-reloading support.
+- `dev` Generates a one time javascript bundle in development mode.
+- `analyze` Runs the build in production mode with `webpack-bundle-analyzer`.
+- `prod` Generates a one time javascript bundle in production mode.
+
 ## FAQ
 
 ### I'm getting a certificate invalid issue when running `npm run dev`
