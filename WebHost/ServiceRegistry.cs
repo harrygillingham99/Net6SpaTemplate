@@ -1,4 +1,6 @@
-﻿using Scrutor;
+﻿using Net6SpaTemplate.BLL;
+using Net6SpaTemplate.DAL;
+using Scrutor;
 using System.CodeDom.Compiler;
 
 namespace Net6SpaTemplate
@@ -8,7 +10,7 @@ namespace Net6SpaTemplate
         public static void ScanForAllRemainingRegistrations(IServiceCollection services)
         {
             services.Scan(scan => scan
-                .FromAssembliesOf(typeof(Program))
+                .FromAssembliesOf(typeof(Program), typeof(TestFacade), typeof(TestRepository))
                 .AddClasses(x => x.WithoutAttribute<GeneratedCodeAttribute>())
                 .UsingRegistrationStrategy(RegistrationStrategy.Skip)
                 .AsImplementedInterfaces()
